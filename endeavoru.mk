@@ -165,6 +165,7 @@ PRODUCT_PACKAGES += \
     l2ping \
     hciconfig \
     hcitool \
+    ugexec \
     libbt-vendor
 
 # NFC packages
