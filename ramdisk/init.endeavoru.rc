@@ -40,6 +40,7 @@ on fs
     chmod 0660 /rca/calib.nvm
     chmod 0660 /rca
     chmod 0660 /rfs
+    start poweron_modem
     start pollyd
 
 on post-fs-data

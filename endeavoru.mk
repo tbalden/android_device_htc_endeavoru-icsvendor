@@ -156,6 +156,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     camera.tegra
 
+# Stagefright
+PRODUCT_PACKAGES += \
+    libstagefrighthw
+
 # Bluetooth tools
 PRODUCT_PACKAGES += \
     l2ping \

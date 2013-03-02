@@ -91,7 +91,7 @@ static int check_vendor_module()
     return rv;
 }
 
-const static char * scene_mode_values[] = {"auto,action,portrait,landscape,beach,fireworks,night,night-portrait,snow,sports,steadyphoto,sunset,theatre,barcode,candlelight,hdr,text,closeup,back-light","auto"};
+const static char * scene_mode_values[] = {"auto,action,portrait,landscape,beach,fireworks,night,night-portrait,snow,sports,steadyphoto,sunset,theatre,barcode,candlelight,hdr,text","auto"};
 
 static char * camera_fixup_getparams(int id, const char * settings)
 {
@@ -113,15 +113,19 @@ char * camera_fixup_setparams(int id, const char * settings)
     android::CameraParameters params;
     params.unflatten(android::String8(settings));
 
-    // fix params here
+    if(params.get("iso")) {
+//        const char* isoMode = params.get(android::CameraParameters::KEY_ISO_MODE);
+        const char* isoMode = params.get("iso");
+        if(strcmp(isoMode, "0") == 0)
+            params.set("iso", "auto");
+    }
+
+//    params.set("cam-mode", "1");
+
     if(params.get("scene-mode")) {
         const char* sceneMode = params.get(android::CameraParameters::KEY_SCENE_MODE);
         if(strcmp(sceneMode, "hdr") == 0)
             params.set(android::CameraParameters::KEY_SCENE_MODE, "backlight-hdr");
-        else if(strcmp(sceneMode, "closeup") == 0)
-            params.set(android::CameraParameters::KEY_SCENE_MODE, "close-up");
-        else if(strcmp(sceneMode, "back-light") == 0)
-            params.set(android::CameraParameters::KEY_SCENE_MODE, "backlight");
     }
 
     android::String8 strParams = params.flatten();
